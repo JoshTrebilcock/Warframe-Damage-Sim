@@ -23,4 +23,46 @@ weaponStats = {"baseDamage":100,
                "magazineCapacity":100,
                "reload":2.0}
 
+enemyStats = {"health":10000,
+              "armor":1000,
+              "shields":2500,
+              "healthType":"clonedFlesh",
+              "armorType":"ferriteArmor",
+              "shieldsType":"standardShields"}
+
+timePassed = 0.0
+timeUntilNextShot = 0.0
+timeUntilNextStatus = 0.0
+
+def FireShot():
+    return
+
+def SlashTick():
+    return
+
+def ToxinTick():
+    return
+
+def HeatTick():
+    return
+
+def ElectricityTick():
+    return
+
+def CorrosiveExpire():
+    return
+
+def ViralExpire():
+    return
+
+def MagneticExpire():
+    return
+
+FireShot()
+while(enemyStats["health"]>0):
+    enemyStats["health"] -= 499
+    print(enemyStats["health"])
+    
+
 print(weaponStats)
+print(enemyStats)
