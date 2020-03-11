@@ -1,1 +1,26 @@
-#inital file
+weaponStats = {"baseDamage":100,
+               "multishot":1.9,
+               "criticalChance":0.75,
+               "criticalMultiplier":4.4,
+               "statusChance":0.5,
+               "impactDamage":20,
+               "punctureDamage":40,
+               "slashDamage":40,
+               "toxinDamage":0,
+               "heatDamage":0,
+               "electricityDamage":0,
+               "coldDamage":0,
+               "corrosiveDamage":150,
+               "blastDamage":0,
+               "radiationDamage":0,
+               "viralDamage":0,
+               "gasDamage":0,
+               "magneticDamage":0,
+               "heatModifier":0,
+               "toxinModifier":0,
+               "electricityModifier":0,
+               "fireRate":10.00,
+               "magazineCapacity":100,
+               "reload":2.0}
+
+print(weaponStats)
