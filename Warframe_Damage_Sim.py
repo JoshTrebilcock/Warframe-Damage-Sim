@@ -1,3 +1,6 @@
+import math
+import random
+
 weaponStats = {"baseDamage":100,
                "multishot":1.9,
                "criticalChance":0.75,
@@ -55,12 +58,20 @@ timeUntilNextViralExpiry = 0.0
 timeUntilNextMagneticExpiry = 0.0"""
 
 def FireShot():
-    totalDamage = 0 #possibly make global
+    totalDamage = 0
     if (enemyStats["shields"] > 0):
         for damageType in weaponDamageValues:
-            print(weaponDamageValues[damageType],"*",shieldTypes[enemyStats["shieldsType"]][damageType],"=")
             totalDamage += (weaponDamageValues[damageType]*shieldTypes[enemyStats["shieldsType"]][damageType])
-            print(totalDamage)
+    return
+
+def rollMultishot():
+    return
+
+def rollCrit():
+    critTier = math.floor(weaponStats["criticalChance"])
+    return
+
+def rollStatus():
     return
 
 def StatusTick():
