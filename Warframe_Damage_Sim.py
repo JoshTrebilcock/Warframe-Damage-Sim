@@ -27,10 +27,36 @@ weaponStats = {"baseDamage":100,
                "magazineCapacity":100,
                "reload":2.0}
 
-weaponDamageValues = {"impact":20,
-                      "puncture":40,
-                      "slash":40,
-                      "corrosive":150,}
+weaponBaseValues = {"impact":600,
+                    "puncture":0,
+                    "slash":0,
+                    "toxin":0,
+                    "heat":0,
+                    "electricity":0,
+                    "cold":800,
+                    "corrosive":0,
+                    "blast":0,
+                    "radiation":0,
+                    "viral":0,
+                    "gas":0,
+                    "magnetic":0}
+
+weaponPhysicalModifiers = {"impact":0,
+                           "puncture":0,
+                           "slash":0}
+
+weaponElementalModifiers = {"toxin":0,
+                            "heat":0,
+                            "electricity":0,
+                            "cold":1.65,
+                            "corrosive":0,
+                            "blast":0,
+                            "radiation":0,
+                            "viral":0,
+                            "gas":0,
+                            "magnetic":0}
+
+weaponDamageValues = {}
 
 enemyStats = {"health":10000,
               "armor":1000,
@@ -61,17 +87,40 @@ def FireShot():
     totalDamage = 0
     if (enemyStats["shields"] > 0):
         for damageType in weaponDamageValues:
+            print(weaponDamageValues[damageType],damageType,shieldTypes[enemyStats["shieldsType"]][damageType])
             totalDamage += (weaponDamageValues[damageType]*shieldTypes[enemyStats["shieldsType"]][damageType])
+    print(totalDamage)
     return
 
-def rollMultishot():
+def QuantizeDamageValues(): #Warframe has some damage calculations, that's for sure
+    total = sum(weaponBaseValues.values()) #Total and quantum (1/16) of the base damage
+    quantum = total/16
+    print("Total:", total,"| Quantum:",quantum)
+    for damageType in weaponPhysicalModifiers:
+        if (weaponBaseValues[damageType] == 0): #Skip damage type if the weapon does not have it
+            continue
+        weaponDamageValues[damageType] = 0 #Create dictionary element for new damage type - can remove along with test prints
+        print(weaponDamageValues[damageType], end=" -> ")
+        print((weaponBaseValues[damageType]/quantum) * (1 + weaponPhysicalModifiers[damageType]), end=" -> ") ###
+        weaponDamageValues[damageType] = (round((weaponBaseValues[damageType]/quantum) * (1 + weaponPhysicalModifiers[damageType])))*quantum #Quantize and apply physical damage modifier
+        print(weaponDamageValues[damageType])
+    for damageType in weaponElementalModifiers:
+        if (weaponBaseValues[damageType] == 0 and weaponElementalModifiers[damageType] == 0): #Skip damage type if the weapon does not have it or a modifier
+            continue
+        weaponDamageValues[damageType] = 0 #Create dictionary element for new damage type - can remove along with test prints
+        print(weaponDamageValues[damageType], end=" -> ")
+        print((total/quantum) * weaponElementalModifiers[damageType], end=" -> ") ###
+        weaponDamageValues[damageType] = (round((weaponBaseValues[damageType]/quantum) + ((total/quantum) * weaponElementalModifiers[damageType])))*quantum #Quantize and apply elemental damage modifier
+        print(weaponDamageValues[damageType])
+
+def RollMultishot():
     return
 
-def rollCrit():
+def RollCrit():
     critTier = math.floor(weaponStats["criticalChance"])
     return
 
-def rollStatus():
+def RollStatus():
     return
 
 def StatusTick():
@@ -101,4 +150,5 @@ def ViralExpiry():
 def MagneticExpiry():
     return
 
+QuantizeDamageValues()
 FireShot()
